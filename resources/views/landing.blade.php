@@ -433,6 +433,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
+                        <a class="nav-link" href="#beranda">Beranda</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#fitur">Fitur</a>
                     </li>
                     <li class="nav-item">
@@ -441,18 +444,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#testimoni">Testimoni</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn-primary-custom ms-lg-2" href="/dashboard" style="padding: 10px 25px; font-size: 0.9rem;">
-                            Dashboard
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Hero Section / Beranda -->
+    <section class="hero" id="beranda">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 mb-4 mb-lg-0">

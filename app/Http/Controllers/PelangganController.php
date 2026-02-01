@@ -10,7 +10,7 @@ class PelangganController extends Controller
     // Tampilkan daftar pelanggan
     public function index()
     {
-        $pelanggans = User::latest()->paginate(10);
+        $pelanggans = User::where('role', 'user')->latest()->paginate(10);
         return view('admin.pelanggan.index', compact('pelanggans'));
     }
 

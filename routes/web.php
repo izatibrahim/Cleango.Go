@@ -18,38 +18,34 @@ Route::get('/landing', function () {
 Route::get('/admin/login', [AuthController::class, 'showAdminLogin'])->name('admin.login')->middleware('guest');
 Route::post('/admin/login', [AuthController::class, 'adminLogin'])->middleware('guest');
 
-// Authentication Routes
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register')->middleware('guest');
-Route::post('/register', [AuthController::class, 'register'])->middleware('guest');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('admin');
-
 // Protected Routes - Admin Only
 Route::middleware(['admin'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Logout route for admin
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
     // Paket routes
-    Route::get('/paket', [PaketController::class, 'index']);
-    Route::get('/paket/tambah', [PaketController::class, 'create']);
-    Route::post('/paket/simpan', [PaketController::class, 'store']);
-    Route::get('/paket/{id}/edit', [PaketController::class, 'edit']);
-    Route::patch('/paket/{id}', [PaketController::class, 'update']);
-    Route::delete('/paket/hapus/{id}', [PaketController::class, 'destroy']);
+    Route::get('/paket', [PaketController::class, 'index'])->name('admin.paket.index');
+    Route::get('/paket/tambah', [PaketController::class, 'create'])->name('admin.paket.create');
+    Route::post('/paket/simpan', [PaketController::class, 'store'])->name('admin.paket.store');
+    Route::get('/paket/{id}/edit', [PaketController::class, 'edit'])->name('admin.paket.edit');
+    Route::patch('/paket/{id}', [PaketController::class, 'update'])->name('admin.paket.update');
+    Route::delete('/paket/hapus/{id}', [PaketController::class, 'destroy'])->name('admin.paket.destroy');
 
     // Transaksi routes
-    Route::get('/transaksi', [TransaksiController::class, 'index']);
-    Route::get('/transaksi/tambah', [TransaksiController::class, 'create']);
-    Route::post('/transaksi/simpan', [TransaksiController::class, 'store']);
-    Route::get('/transaksi/{id}/edit', [TransaksiController::class, 'edit']);
-    Route::patch('/transaksi/{id}', [TransaksiController::class, 'update']);
-    Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy']);
+    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('admin.transaksi.index');
+    Route::get('/transaksi/tambah', [TransaksiController::class, 'create'])->name('admin.transaksi.create');
+    Route::post('/transaksi/simpan', [TransaksiController::class, 'store'])->name('admin.transaksi.store');
+    Route::get('/transaksi/{id}/edit', [TransaksiController::class, 'edit'])->name('admin.transaksi.edit');
+    Route::patch('/transaksi/{id}', [TransaksiController::class, 'update'])->name('admin.transaksi.update');
+    Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('admin.transaksi.destroy');
 
     // Pelanggan routes
-    Route::get('/pelanggan', [PelangganController::class, 'index']);
-    Route::get('/pelanggan/tambah', [PelangganController::class, 'create']);
-    Route::post('/pelanggan/simpan', [PelangganController::class, 'store']);
-    Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit']);
-    Route::patch('/pelanggan/{id}', [PelangganController::class, 'update']);
-    Route::delete('/pelanggan/{id}', [PelangganController::class, 'destroy']);
+    Route::get('/pelanggan', [PelangganController::class, 'index'])->name('admin.pelanggan.index');
+    Route::get('/pelanggan/tambah', [PelangganController::class, 'create'])->name('admin.pelanggan.create');
+    Route::post('/pelanggan/simpan', [PelangganController::class, 'store'])->name('admin.pelanggan.store');
+    Route::get('/pelanggan/{id}/edit', [PelangganController::class, 'edit'])->name('admin.pelanggan.edit');
+    Route::patch('/pelanggan/{id}', [PelangganController::class, 'update'])->name('admin.pelanggan.update');
+    Route::delete('/pelanggan/{id}', [PelangganController::class, 'destroy'])->name('admin.pelanggan.destroy');
 });
