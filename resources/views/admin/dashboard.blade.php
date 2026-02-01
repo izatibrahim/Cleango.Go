@@ -128,6 +128,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse($recentActivities as $activity)
+                    <tr>
+                        <td><i class="bi bi-calendar3 me-1"></i>{{ \Carbon\Carbon::parse($activity->created_at)->format('d M Y') }}</td>
+                        <td>New Transaction</td>
+                        <td>Transaksi {{ $activity->no_transaksi }} - {{ $activity->paket->nama_paket ?? 'N/A' }}</td>
+                        <td><span class="badge bg-{{ $activity->status == 'selesai' ? 'success' : 'info' }}">{{ ucfirst($activity->status ?? 'pending') }}</span></td>
+                    </tr>
+                    @empty
                     <tr>
                         <td><i class="bi bi-calendar3 me-1"></i><span id="today"></span></td>
                         <td>Dashboard Accessed</td>
@@ -136,22 +144,11 @@
                     </tr>
                     <tr>
                         <td><i class="bi bi-calendar3 me-1"></i><span id="yesterday"></span></td>
-                        <td>New Transaction</td>
-                        <td>Transaksi baru berhasil dicatat</td>
-                        <td><span class="badge bg-info">Selesai</span></td>
+                        <td>Welcome</td>
+                        <td>Sistem laundry siap digunakan</td>
+                        <td><span class="badge bg-info">Info</span></td>
                     </tr>
-                    <tr>
-                        <td><i class="bi bi-calendar3 me-1"></i><span id="twoDaysAgo"></span></td>
-                        <td>Package Updated</td>
-                        <td>Paket layanan diperbarui</td>
-                        <td><span class="badge bg-warning">Tersimpan</span></td>
-                    </tr>
-                    <tr>
-                        <td><i class="bi bi-calendar3 me-1"></i><span id="threeDaysAgo"></span></td>
-                        <td>Customer Added</td>
-                        <td>Pelanggan baru ditambahkan</td>
-                        <td><span class="badge bg-success">Berhasil</span></td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -161,29 +158,25 @@
 
 @push('scripts')
 <script>
-    // Format tanggal Indonesia
+    // Format tanggal Indonesia - hanya untuk fallback jika diperlukan
     function formatDateShort(date) {
         const day = date.getDate();
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 
-                      'Jul', 'Agu', 'Sep', 'Oct', 'Nov', 'Des'];
+                        'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
         const month = months[date.getMonth()];
         const year = date.getFullYear();
 
         return `${day} ${month} ${year}`;
     }
 
-    // Set tanggal
+    // Set tanggal untuk fallback jika tidak ada aktivitas
+    @if($recentActivities->isEmpty())
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
-    const twoDaysAgo = new Date(today);
-    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-    const threeDaysAgo = new Date(today);
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
 
     document.getElementById('today').textContent = formatDateShort(today);
     document.getElementById('yesterday').textContent = formatDateShort(yesterday);
-    document.getElementById('twoDaysAgo').textContent = formatDateShort(twoDaysAgo);
-    document.getElementById('threeDaysAgo').textContent = formatDateShort(threeDaysAgo);
+    @endif
 </script>
 @endpush

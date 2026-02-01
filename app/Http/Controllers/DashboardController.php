@@ -25,12 +25,19 @@ class DashboardController extends Controller
             $totalPendapatan = 0;
         }
 
+        // Ambil aktivitas terbaru (5 transaksi terakhir)
+        $recentActivities = Transaksi::with(['user', 'paket'])
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
         // Kirim data ke view
         return view('admin.dashboard', compact(
             'totalPaket',
             'totalTransaksi',
             'totalPelanggan',
-            'totalPendapatan'
+            'totalPendapatan',
+            'recentActivities'
         ));
     }
 }

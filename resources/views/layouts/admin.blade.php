@@ -55,26 +55,8 @@
                                 </p>
                             </li>
                             <!--end::User Image-->
-                            <!--begin::Menu Body-->
-                            <li class="user-body">
-                                <!--begin::Row-->
-                                <div class="row">
-                                    <div class="col-4 text-center">
-                                        <a href="#">Followers</a>
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <a href="#">Sales</a>
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <a href="#">Friends</a>
-                                    </div>
-                                </div>
-                                <!--end::Row-->
-                            </li>
-                            <!--end::Menu Body-->
                             <!--begin::Menu Footer-->
                             <li class="user-footer">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                     @csrf
                                     <button type="submit" class="btn btn-default btn-flat float-end">Sign out</button>
