@@ -24,10 +24,10 @@ class DatabaseSeeder extends Seeder
 
         // Create admin user
         User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
+            'name' => 'Admin Laundry',
+            'email' => 'admin@cleango.com',
             'role' => 'admin',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('admin123'),
         ]);
     }
 }
