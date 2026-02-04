@@ -60,7 +60,7 @@
         .form-container {
             background: white;
             border-radius: 20px;
-            padding: 40px;
+            padding: 35px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(139, 92, 246, 0.1);
             margin-top: 30px;
@@ -69,37 +69,23 @@
 
         /* Header Section */
         .form-header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .form-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
-        }
-
-        .form-icon i {
-            font-size: 2.5rem;
-            color: white;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #F3F4F6;
         }
 
         .form-title {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--dark);
-            margin-bottom: 10px;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .form-subtitle {
-            color: #6B7280;
-            font-size: 0.95rem;
+        .form-title i {
+            color: var(--primary);
         }
 
         /* Form Elements */
@@ -227,7 +213,7 @@
 
         /* Form Group */
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         /* Info Box */
@@ -330,15 +316,14 @@
     <!-- Main Container -->
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-8 col-xl-7">
+            <div class="col-lg-7 col-xl-6">
                 <div class="form-container">
                     <!-- Header -->
                     <div class="form-header">
-                        <div class="form-icon">
-                            <i class="bi bi-box-seam-fill"></i>
-                        </div>
-                        <h2 class="form-title">Tambah Paket Laundry</h2>
-                        <p class="form-subtitle">Tambahkan paket layanan laundry baru ke sistem Anda</p>
+                        <h2 class="form-title">
+                            <i class="bi bi-plus-circle-fill"></i>
+                            Tambah Paket
+                        </h2>
                     </div>
 
                     <!-- Error Alert -->
@@ -361,7 +346,7 @@
                         <!-- Nama Paket -->
                         <div class="form-group">
                             <label for="nama_paket" class="form-label">
-                                <i class="bi bi-tag-fill"></i> Nama Paket <span class="required">*</span>
+                                Nama Paket <span class="required">*</span>
                             </label>
                             <input 
                                 type="text" 
@@ -369,12 +354,9 @@
                                 id="nama_paket" 
                                 name="nama_paket" 
                                 value="{{ old('nama_paket') }}" 
-                                placeholder="Contoh: Cuci Regular, Cuci Express, Cuci Premium" 
+                                placeholder="Contoh: Cuci Regular, Cuci Express" 
                                 required
                             >
-                            <small class="form-text">
-                                <i class="bi bi-info-circle-fill"></i> Masukkan nama paket yang deskriptif dan mudah dipahami
-                            </small>
                             @error('nama_paket')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -383,7 +365,7 @@
                         <!-- Harga -->
                         <div class="form-group">
                             <label for="harga" class="form-label">
-                                <i class="bi bi-wallet2"></i> Harga per Kilogram <span class="required">*</span>
+                                Harga per Kilogram <span class="required">*</span>
                             </label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp</span>
@@ -393,15 +375,12 @@
                                     id="harga" 
                                     name="harga" 
                                     value="{{ old('harga') }}" 
-                                    placeholder="Masukkan harga per kg" 
+                                    placeholder="Masukkan harga" 
                                     step="500" 
                                     min="0" 
                                     required
                                 >
                             </div>
-                            <small class="form-text">
-                                <i class="bi bi-info-circle-fill"></i> Harga dapat diubah sewaktu-waktu sesuai kebutuhan
-                            </small>
                             @error('harga')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -410,7 +389,7 @@
                         <!-- Jenis Paket -->
                         <div class="form-group">
                             <label for="jenis" class="form-label">
-                                <i class="bi bi-list-ul"></i> Jenis Paket <span class="required">*</span>
+                                Jenis Paket <span class="required">*</span>
                             </label>
                             <select 
                                 class="form-select @error('jenis') is-invalid @enderror" 
@@ -419,49 +398,24 @@
                                 required
                             >
                                 <option value="">-- Pilih Jenis Paket --</option>
-                                <option value="Regular" {{ old('jenis') == 'Regular' ? 'selected' : '' }}>
-                                    🧺 Cuci Regular (3-5 hari)
-                                </option>
-                                <option value="Express" {{ old('jenis') == 'Express' ? 'selected' : '' }}>
-                                    ⚡ Cuci Express (1 hari)
-                                </option>
-                                <option value="Premium" {{ old('jenis') == 'Premium' ? 'selected' : '' }}>
-                                    ⭐ Cuci Premium (same day + aroma)
-                                </option>
-                                <option value="Karpet" {{ old('jenis') == 'Karpet' ? 'selected' : '' }}>
-                                    🏠 Cuci Karpet
-                                </option>
-                                <option value="Bedcover" {{ old('jenis') == 'Bedcover' ? 'selected' : '' }}>
-                                    🛏️ Cuci Bedcover
-                                </option>
-                                <option value="Jas" {{ old('jenis') == 'Jas' ? 'selected' : '' }}>
-                                    👔 Cuci Jas/Pakaian Premium
-                                </option>
-                                <option value="Sepatu" {{ old('jenis') == 'Sepatu' ? 'selected' : '' }}>
-                                    👟 Cuci Sepatu
-                                </option>
-                                <option value="Gorden" {{ old('jenis') == 'Gorden' ? 'selected' : '' }}>
-                                    🪟 Cuci Gorden
-                                </option>
+                                <option value="Regular" {{ old('jenis') == 'Regular' ? 'selected' : '' }}>Cuci Regular</option>
+                                <option value="Express" {{ old('jenis') == 'Express' ? 'selected' : '' }}>Cuci Express</option>
+                                <option value="Premium" {{ old('jenis') == 'Premium' ? 'selected' : '' }}>Cuci Premium</option>
+                                <option value="Karpet" {{ old('jenis') == 'Karpet' ? 'selected' : '' }}>Cuci Karpet</option>
+                                <option value="Bedcover" {{ old('jenis') == 'Bedcover' ? 'selected' : '' }}>Cuci Bedcover</option>
+                                <option value="Jas" {{ old('jenis') == 'Jas' ? 'selected' : '' }}>Cuci Jas</option>
+                                <option value="Sepatu" {{ old('jenis') == 'Sepatu' ? 'selected' : '' }}>Cuci Sepatu</option>
+                                <option value="Gorden" {{ old('jenis') == 'Gorden' ? 'selected' : '' }}>Cuci Gorden</option>
                             </select>
-                            <small class="form-text">
-                                <i class="bi bi-info-circle-fill"></i> Pilih kategori yang sesuai dengan layanan yang ditawarkan
-                            </small>
                             @error('jenis')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Info Box -->
-                        <div class="info-box">
-                            <i class="bi bi-lightbulb-fill"></i>
-                            <strong>Tips Penting:</strong> Pastikan nama paket jelas dan mudah dipahami pelanggan. Harga sebaiknya disesuaikan dengan kualitas layanan yang diberikan untuk menjaga kepuasan pelanggan.
-                        </div>
-
                         <!-- Buttons -->
-                        <div class="d-flex gap-3 button-group">
+                        <div class="d-flex gap-2 button-group">
                             <button type="submit" class="btn btn-submit">
-                                <i class="bi bi-save-fill me-2"></i> Simpan Paket
+                                <i class="bi bi-save-fill me-2"></i> Simpan
                             </button>
                             <a href="/paket" class="btn btn-cancel">
                                 <i class="bi bi-x-circle me-2"></i> Batal

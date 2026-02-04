@@ -62,7 +62,7 @@
         .form-container {
             background: white;
             border-radius: 20px;
-            padding: 40px;
+            padding: 35px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(139, 92, 246, 0.1);
             margin-top: 30px;
@@ -71,37 +71,23 @@
 
         /* Header Section */
         .form-header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .form-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--warning) 0%, #FBBF24 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
-        }
-
-        .form-icon i {
-            font-size: 2.5rem;
-            color: white;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #F3F4F6;
         }
 
         .form-title {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--dark);
-            margin-bottom: 10px;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .form-subtitle {
-            color: #6B7280;
-            font-size: 0.95rem;
+        .form-title i {
+            color: var(--warning);
         }
 
         /* Form Elements */
@@ -240,7 +226,7 @@
 
         /* Form Group */
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         /* Info Box */
@@ -434,28 +420,26 @@
             <a href="/pelanggan" class="navbar-brand">
                 <i class="bi bi-arrow-left-circle me-2"></i> Kembali ke Daftar Pelanggan
             </a>
-            <h5 class="navbar-title d-none d-md-block">Edit Data Pelanggan</h5>
+            <h5 class="navbar-title d-none d-md-block">Edit Pelanggan</h5>
         </div>
     </nav>
 
     <!-- Main Container -->
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-8 col-xl-7">
+            <div class="col-lg-7 col-xl-6">
                 <div class="form-container">
                     <!-- Header -->
                     <div class="form-header">
-                        <div class="form-icon">
+                        <h2 class="form-title">
                             <i class="bi bi-pencil-square"></i>
-                        </div>
-                        <h2 class="form-title">Edit Data Pelanggan</h2>
-                        <p class="form-subtitle">Perbarui informasi pelanggan dengan data yang akurat</p>
+                            Edit Pelanggan
+                        </h2>
                     </div>
 
                     <!-- Customer Info Card -->
                     <div class="customer-info-card">
                         <div class="customer-info-title">
-                            <i class="bi bi-info-circle-fill"></i>
                             Informasi Pelanggan
                         </div>
                         <div class="customer-info-grid">
@@ -474,9 +458,7 @@
                             <div class="customer-info-item">
                                 <span class="customer-info-label">Status</span>
                                 <span class="customer-info-value">
-                                    <span class="badge-edited">
-                                        <i class="bi bi-pencil-fill me-1"></i>Mode Edit
-                                    </span>
+                                    <span class="badge-edited">Mode Edit</span>
                                 </span>
                             </div>
                         </div>
@@ -503,7 +485,7 @@
                         <!-- Nama Pelanggan -->
                         <div class="form-group">
                             <label for="name" class="form-label">
-                                <i class="bi bi-person-fill"></i> Nama Lengkap <span class="required">*</span>
+                                Nama Lengkap <span class="required">*</span>
                             </label>
                             <input 
                                 type="text" 
@@ -515,9 +497,6 @@
                                 required
                                 minlength="3"
                             >
-                            <small class="form-text">
-                                <i class="bi bi-info-circle-fill"></i> Masukkan nama lengkap pelanggan (minimal 3 karakter)
-                            </small>
                             @error('name')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
@@ -528,7 +507,7 @@
                             <!-- Email -->
                             <div class="form-group">
                                 <label for="email" class="form-label">
-                                    <i class="bi bi-envelope-fill"></i> Email <span class="required">*</span>
+                                    Email <span class="required">*</span>
                                 </label>
                                 <input 
                                     type="email" 
@@ -539,9 +518,6 @@
                                     placeholder="contoh@email.com" 
                                     required
                                 >
-                                <small class="form-text">
-                                    <i class="bi bi-info-circle-fill"></i> Email harus valid
-                                </small>
                                 @error('email')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
@@ -550,7 +526,7 @@
                             <!-- No HP -->
                             <div class="form-group">
                                 <label for="phone" class="form-label">
-                                    <i class="bi bi-telephone-fill"></i> No. Handphone <span class="required">*</span>
+                                    No. Handphone <span class="required">*</span>
                                 </label>
                                 <div class="input-group">
                                     <span class="input-group-text">+62</span>
@@ -565,9 +541,6 @@
                                         pattern="[0-9]{9,13}"
                                     >
                                 </div>
-                                <small class="form-text">
-                                    <i class="bi bi-info-circle-fill"></i> Format: 81234567890 (tanpa 0)
-                                </small>
                                 @error('phone')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
@@ -577,7 +550,7 @@
                         <!-- Alamat -->
                         <div class="form-group">
                             <label for="address" class="form-label">
-                                <i class="bi bi-geo-alt-fill"></i> Alamat Lengkap
+                                Alamat Lengkap
                             </label>
                             <textarea 
                                 class="form-control @error('address') is-invalid @enderror" 
@@ -587,10 +560,7 @@
                                 placeholder="Jl. Contoh No. 123, RT/RW 01/02"
                                 maxlength="200"
                             >{{ old('address', $pelanggan->address) }}</textarea>
-                            <div class="d-flex justify-content-between">
-                                <small class="form-text">
-                                    <i class="bi bi-info-circle-fill"></i> Alamat memudahkan pengiriman (opsional)
-                                </small>
+                            <div class="d-flex justify-content-end">
                                 <small class="char-counter">
                                     <span id="charCount">0</span>/200
                                 </small>
@@ -603,7 +573,7 @@
                         <!-- Kota -->
                         <div class="form-group">
                             <label for="city" class="form-label">
-                                <i class="bi bi-building"></i> Kota/Kabupaten
+                                Kota/Kabupaten
                             </label>
                             <input 
                                 type="text" 
@@ -623,24 +593,15 @@
                                 <option value="Yogyakarta">
                                 <option value="Medan">
                             </datalist>
-                            <small class="form-text">
-                                <i class="bi bi-info-circle-fill"></i> Pilih atau ketik nama kota (opsional)
-                            </small>
                             @error('city')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Warning Info Box -->
-                        <div class="alert alert-warning" role="alert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            <strong>Perhatian!</strong> Pastikan data yang Anda ubah sudah benar. Perubahan data akan mempengaruhi riwayat transaksi pelanggan.
-                        </div>
-
                         <!-- Buttons -->
-                        <div class="d-flex gap-3 button-group">
+                        <div class="d-flex gap-2 button-group">
                             <button type="submit" class="btn btn-submit">
-                                <i class="bi bi-check-circle-fill me-2"></i> Simpan Perubahan
+                                <i class="bi bi-check-circle-fill me-2"></i> Simpan
                             </button>
                             <a href="/pelanggan" class="btn btn-cancel">
                                 <i class="bi bi-x-circle me-2"></i> Batal

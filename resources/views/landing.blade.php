@@ -627,7 +627,7 @@
         <div class="container">
             <h2>Siap Mempercayai Kami?</h2>
             <p class="mb-4">Hubungi kami sekarang untuk mendapatkan penawaran spesial dan diskon menarik.</p>
-            <a href="https://wa.me/6281234567890" class="btn-primary-custom" target="_blank">
+            <a href="https://wa.me/6282345608014" class="btn-primary-custom" target="_blank">
                 <i class="bi bi-whatsapp"></i> Hubungi via WhatsApp
             </a>
         </div>
@@ -657,14 +657,14 @@
                 <div class="col-md-2 mb-4">
                     <h5>Perusahaan</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#fitur">Tentang Kami</a></li>
+                        <li><a href="#fitur">Fitur</a></li>
                         <li><a href="#testimoni">Testimoni</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4">
                     <h5>Kontak</h5>
                     <ul class="list-unstyled">
-                        <li><i class="bi bi-telephone-fill"></i> +62 812 345 678</li>
+                        <li><i class="bi bi-telephone-fill"></i> +62 823 4560 8014</li>
                         <li><i class="bi bi-envelope-fill"></i> info@cleango.com</li>
                         <li><i class="bi bi-geo-alt-fill"></i> Bandung, Indonesia</li>
                     </ul>
@@ -678,7 +678,7 @@
     </footer>
 
     <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/6281234567890" 
+    <a href="https://wa.me/6282345608014" 
         class="whatsapp-float" 
         target="_blank" 
         title="Chat via WhatsApp">
