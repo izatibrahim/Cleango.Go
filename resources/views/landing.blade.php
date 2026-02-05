@@ -151,17 +151,6 @@
             font-size: 4rem;
         }
 
-        /* Decorative wave */
-        .wave-decoration {
-            position: absolute;
-            top: 20%;
-            right: 5%;
-            width: 80px;
-            height: 80px;
-            opacity: 0.3;
-            z-index: 1;
-        }
-
         .whatsapp-float {
             position: fixed;
             width: 60px;
@@ -238,15 +227,17 @@
             line-height: 1.6;
         }
 
+        /* Service Card - Updated Design */
         .service-card {
             background: white;
             border-radius: 15px;
-            padding: 30px;
+            padding: 0;
             margin-bottom: 25px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s;
             height: 100%;
             border: 2px solid #f5f3ff;
+            overflow: hidden;
         }
 
         .service-card:hover {
@@ -255,22 +246,75 @@
             box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
         }
 
+        .service-image {
+            width: 100%;
+            aspect-ratio: 1;
+            overflow: hidden;
+        }
+
+        .service-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-placeholder i {
+            font-size: 5rem;
+            color: white;
+            opacity: 0.9;
+        }
+
         .service-card h5 {
-            color: var(--primary);
+            color: var(--dark);
             font-weight: 600;
-            margin-bottom: 15px;
+            margin: 20px 20px 10px;
+            font-size: 1.25rem;
         }
 
         .service-card p {
             color: #6B7280;
-            margin-bottom: 15px;
+            margin: 0 20px 15px;
+            font-size: 0.95rem;
         }
 
         .service-price {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            color: var(--primary);
-            margin-top: 15px;
+            color: #10B981;
+            margin: 0 20px 20px;
+        }
+
+        .service-price span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6B7280;
+        }
+
+        .service-actions {
+            padding: 20px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .btn-order {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-order:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+            color: white;
         }
 
         .testimonials {
@@ -402,6 +446,10 @@
             .cta h2 {
                 font-size: 2rem;
             }
+
+            .service-placeholder i {
+                font-size: 3.5rem;
+            }
         }
 
         @media (max-width: 576px) {
@@ -449,7 +497,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section / Beranda -->
+    <!-- Hero Section -->
     <section class="hero" id="beranda">
         <div class="container">
             <div class="row align-items-center">
@@ -467,42 +515,28 @@
                     <div class="image-grid">
                         <div class="image-card">
                             <div class="image-placeholder">
-                                <div class="image-content">
-                                    👕
-                                </div>
+                                <div class="image-content">👕</div>
                             </div>
                         </div>
                         <div class="image-card">
                             <div class="image-placeholder">
-                                <div class="image-content">
-                                    🧥
-                                </div>
+                                <div class="image-content">🧥</div>
                             </div>
                         </div>
                         <div class="image-card">
                             <div class="image-placeholder">
-                                <div class="image-content">
-                                    🧺
-                                </div>
+                                <div class="image-content">🧺</div>
                             </div>
                         </div>
                         <div class="image-card">
                             <div class="image-placeholder">
-                                <div class="image-content">
-                                    👗
-                                </div>
+                                <div class="image-content">👗</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Decorative Wave -->
-        <svg class="wave-decoration" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 0,50 Q 25,25 50,50 T 100,50" fill="none" stroke="rgba(139, 92, 246, 0.3)" stroke-width="3"/>
-            <path d="M 0,60 Q 25,35 50,60 T 100,60" fill="none" stroke="rgba(236, 72, 153, 0.3)" stroke-width="3"/>
-        </svg>
     </section>
 
     <!-- Features Section -->
@@ -541,30 +575,63 @@
         </div>
     </section>
 
-    <!-- Services Section -->
+    <!-- Services Section - Updated with Order Buttons -->
     <section class="py-5" id="layanan" style="background: #fbf9fb;">
         <div class="container">
             <h2 class="section-title">Paket Layanan Kami</h2>
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <div class="service-card">
-                        <h5><i class="bi bi-bag-check-fill"></i> Regular Laundry</h5>
-                        <p>Layanan cuci standar dengan hasil yang memuaskan. Waktu pengerjaan 3-5 hari.</p>
-                        <div class="service-price">Rp 5.000/kg</div>
+                        <div class="service-image">
+                            <div class="service-placeholder">
+                                <i class="bi bi-bag-check-fill"></i>
+                            </div>
+                        </div>
+                        <h5>Regular Laundry</h5>
+                        <p>Layanan cuci standar dengan hasil memuaskan. Waktu 3-5 hari.</p>
+                        <div class="service-price">Rp 5.000<span>/kg</span></div>
+                        <div class="service-actions">
+                            <a href="https://wa.me/6282345608014?text=Halo, saya ingin memesan Regular Laundry" 
+                               class="btn-order" target="_blank">
+                                <i class="bi bi-lightning-charge-fill me-2"></i>Pesan Sekarang
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="service-card">
-                        <h5><i class="bi bi-lightning-charge-fill"></i> Express Laundry</h5>
-                        <p>Cuci kilat dengan garansi siap dalam 6 jam. Sempurna untuk kebutuhan mendesak.</p>
-                        <div class="service-price">Rp 8.000/kg</div>
+                        <div class="service-image">
+                            <div class="service-placeholder">
+                                <i class="bi bi-lightning-charge-fill"></i>
+                            </div>
+                        </div>
+                        <h5>Express Laundry</h5>
+                        <p>Cuci kilat siap dalam 6 jam. Sempurna untuk kebutuhan mendesak.</p>
+                        <div class="service-price">Rp 8.000<span>/kg</span></div>
+                        <div class="service-actions">
+                            <a href="https://wa.me/6282345608014?text=Halo, saya ingin memesan Express Laundry" 
+                               class="btn-order" target="_blank">
+                                <i class="bi bi-lightning-charge-fill me-2"></i>Pesan Sekarang
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="service-card">
-                        <h5><i class="bi bi-star-fill"></i> Premium Laundry</h5>
-                        <p>Layanan premium dengan perawatan khusus bahan halus dan aroma wangi pilihan.</p>
-                        <div class="service-price">Rp 12.000/kg</div>
+                        <div class="service-image">
+                            <div class="service-placeholder">
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                        </div>
+                        <h5>Premium Laundry</h5>
+                        <p>Layanan premium dengan perawatan khusus dan aroma wangi pilihan.</p>
+                        <div class="service-price">Rp 12.000<span>/kg</span></div>
+                        <div class="service-actions">
+                            <a href="https://wa.me/6282345608014?text=Halo, saya ingin memesan Premium Laundry" 
+                               class="btn-order" target="_blank">
+                                <i class="bi bi-lightning-charge-fill me-2"></i>Pesan Sekarang
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -628,7 +695,7 @@
             <h2>Siap Mempercayai Kami?</h2>
             <p class="mb-4">Hubungi kami sekarang untuk mendapatkan penawaran spesial dan diskon menarik.</p>
             <a href="https://wa.me/6282345608014" class="btn-primary-custom" target="_blank">
-                <i class="bi bi-whatsapp"></i> Hubungi via WhatsApp
+                <i class="bi bi-whatsapp me-2"></i>Hubungi via WhatsApp
             </a>
         </div>
     </section>
@@ -686,9 +753,8 @@
     </a>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script>
-        // Smooth scroll for anchor links
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -702,7 +768,7 @@
             });
         });
 
-        // Add animation on scroll
+        // Animation on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -717,7 +783,6 @@
             });
         }, observerOptions);
 
-        // Observe feature items and service cards
         document.querySelectorAll('.feature-item, .service-card, .testimonial-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(20px)';
