@@ -350,9 +350,6 @@
                                             <span class="badge-type">{{ $p->jenis }}</span>
                                         </td>
                                         <td>
-                                            <a href="/paket/{{ $p->id }}/edit" class="btn btn-edit me-1">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
                                             <form action="/paket/hapus/{{ $p->id }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus {{ $p->nama_paket }}?')">
                                                 @csrf
                                                 @method('DELETE')

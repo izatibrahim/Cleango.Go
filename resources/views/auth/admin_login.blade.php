@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin - CleanGo</title>
+    <title>CleanGo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -86,14 +86,14 @@
 
         .login-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(139, 92, 246, 0.6); }
         
-        .login-link {
+        .daftar-link {
             margin-top: 20px;
             text-align: center;
             font-size: 14px;
             color: var(--dark);
         }
         
-        .login-link a {
+        .daftar-link a {
             color: var(--primary);
             text-decoration: none;
             font-weight: 600;
@@ -133,9 +133,7 @@
     <div class="login-card">
         <div class="login-header">
             <i class="fas fa-shield-alt"></i>
-            <h1>CleanGo Admin</h1>
-            <p>Panel Administrator</p>
-            <span class="admin-badge">Admin Access Only</span>
+            <h1>CleanGo</h1>
         </div>
 
         <div class="login-body">
@@ -152,10 +150,10 @@
                 </div>
             @endif
 
-            <form action="/admin/login" method="POST">
+            <form action="{{ route('login.submit') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label for="email">Email Admin</label>
+                    <label for="email">Email</label>
                     <i class="fas fa-envelope"></i>
                     <input type="email" id="email" name="email" placeholder="Masukkan email admin" value="{{ old('email') }}" required>
                 </div>
@@ -167,12 +165,12 @@
                 </div>
 
                 <button type="submit" class="login-btn">
-                    <i class="fas fa-sign-in-alt"></i> Login Admin
+                    <i class="fas fa-sign-in-alt"></i> Login
                 </button>
             </form>
 
-            <div class="login-link">
-                Kembali ke <a href="/"><i class="fas fa-home"></i> Halaman Utama</a>
+            <div class="daftar-link">
+                Belum punya akun? <a href="{{ route('register') }}"><i class="fas fa-user-plus"></i> Daftar</a>
             </div>
         </div>
     </div>

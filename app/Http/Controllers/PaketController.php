@@ -43,7 +43,8 @@ class PaketController extends Controller
     public function edit($id)
     {
         $paket = Paket::findOrFail($id);
-        return view('admin.kelola paket.paket_edit', compact('paket'));
+        $pakets = Paket::all();
+        return view('admin.kelola paket.paket_index', compact('paket', 'pakets'));
     }
 
     // Update paket

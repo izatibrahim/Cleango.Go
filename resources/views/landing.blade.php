@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>CleanGo - Layanan Laundry Premium</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -49,6 +50,76 @@
 
         .nav-link:hover {
             color: var(--primary) !important;
+        }
+
+        /* Auth Buttons */
+        .btn-auth-login {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary) !important;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-auth-login:hover {
+            background: var(--primary);
+            color: white !important;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-auth-register {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-auth-register:hover {
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-auth-logout {
+            background: transparent;
+            border: 2px solid #DC2626;
+            color: #DC2626 !important;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-auth-logout:hover {
+            background: #DC2626;
+            color: white !important;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+
+        /* Cart Badge */
+        .cart-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #DC2626;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: 600;
         }
 
         .hero {
@@ -227,7 +298,7 @@
             line-height: 1.6;
         }
 
-        /* Service Card - Updated Design */
+        /* Service Card */
         .service-card {
             background: white;
             border-radius: 15px;
@@ -298,6 +369,10 @@
             border-top: 1px solid #f3f4f6;
         }
 
+        .service-actions form {
+            margin: 0;
+        }
+
         .btn-order {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
@@ -309,6 +384,9 @@
             font-weight: 600;
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+            border: none;
+            width: 100%;
+            cursor: pointer;
         }
 
         .btn-order:hover {
@@ -492,6 +570,35 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#testimoni">Testimoni</a>
                     </li>
+                    @auth
+                        <li class="nav-item me-3 position-relative">
+                            <a href="{{ route('cart.index') }}" class="nav-link">
+                                <i class="bi bi-cart3 fs-5"></i>
+                                @if (($cartCount ?? 0) > 0)
+                                    <span class="cart-badge">{{ $cartCount }}</span>
+                                @endif
+                            </a>
+                        </li>
+                    @endauth
+                    @if (auth()->check())
+                        <li class="nav-item">
+                            <button 
+                                class="btn-auth-logout"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="bi bi-box-arrow-right me-2"></i>Logout
+                            </button>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    @else
+                        <li class="nav-item me-2">
+                            <a href="{{ route('login') }}" class="btn-auth-login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('register') }}" class="btn-auth-register">Daftar</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -506,7 +613,7 @@
                         <h1>Menyelesaikan Segala Kebutuhan Cucianmu</h1>
                         <p>Temukan layanan laundry yang kamu butuhkan dan buat perlengkapanmu bersih dan higienis</p>
                         <a href="#layanan" class="btn-hero">
-                            <i class="bi bi-arrow-right"></i> Lihat Layanan
+                            <i class="bi bi-arrow-right me-2"></i>Lihat Layanan
                         </a>
                     </div>
                 </div>
@@ -575,67 +682,39 @@
         </div>
     </section>
 
-    <!-- Services Section - Updated with Order Buttons -->
+    <!-- Services Section -->
     <section class="py-5" id="layanan" style="background: #fbf9fb;">
         <div class="container">
             <h2 class="section-title">Paket Layanan Kami</h2>
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="service-card">
-                        <div class="service-image">
-                            <div class="service-placeholder">
-                                <i class="bi bi-bag-check-fill"></i>
-                            </div>
-                        </div>
-                        <h5>Regular Laundry</h5>
-                        <p>Layanan cuci standar dengan hasil memuaskan. Waktu 3-5 hari.</p>
-                        <div class="service-price">Rp 5.000<span>/kg</span></div>
-                        <div class="service-actions">
-                            <a href="https://wa.me/6282345608014?text=Halo, saya ingin memesan Regular Laundry" 
-                               class="btn-order" target="_blank">
-                                <i class="bi bi-lightning-charge-fill me-2"></i>Pesan Sekarang
-                            </a>
-                        </div>
+    @foreach ($pakets as $paket)
+        <div class="col-md-4 mb-4">
+            <div class="service-card">
+                <div class="service-image">
+                    <div class="service-placeholder">
+                        <i class="bi bi-bag-check-fill"></i>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="service-card">
-                        <div class="service-image">
-                            <div class="service-placeholder">
-                                <i class="bi bi-lightning-charge-fill"></i>
-                            </div>
-                        </div>
-                        <h5>Express Laundry</h5>
-                        <p>Cuci kilat siap dalam 6 jam. Sempurna untuk kebutuhan mendesak.</p>
-                        <div class="service-price">Rp 8.000<span>/kg</span></div>
-                        <div class="service-actions">
-                            <a href="https://wa.me/6282345608014?text=Halo, saya ingin memesan Express Laundry" 
-                               class="btn-order" target="_blank">
-                                <i class="bi bi-lightning-charge-fill me-2"></i>Pesan Sekarang
-                            </a>
-                        </div>
-                    </div>
+                <h5>{{ $paket->nama_paket }}</h5>
+                <p>{{ $paket->deskripsi }}</p>
+                <div class="service-price">
+                    Rp {{ number_format($paket->harga) }} <span>/kg</span>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="service-card">
-                        <div class="service-image">
-                            <div class="service-placeholder">
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                        </div>
-                        <h5>Premium Laundry</h5>
-                        <p>Layanan premium dengan perawatan khusus dan aroma wangi pilihan.</p>
-                        <div class="service-price">Rp 12.000<span>/kg</span></div>
-                        <div class="service-actions">
-                            <a href="https://wa.me/6282345608014?text=Halo, saya ingin memesan Premium Laundry" 
-                               class="btn-order" target="_blank">
-                                <i class="bi bi-lightning-charge-fill me-2"></i>Pesan Sekarang
-                            </a>
-                        </div>
-                    </div>
+                <div class="service-actions">
+                    <form action="{{ route('cart.add') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="paket_id" value="{{ $paket->id }}">
+                        <input type="hidden" name="qty" value="1">
+                        <button type="submit" class="btn-order">
+                            <i class="bi bi-cart-plus me-2"></i>
+                            Pesan Sekarang
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
+    @endforeach
+</div>
     </section>
 
     <!-- Testimonials Section -->

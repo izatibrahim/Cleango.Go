@@ -3,56 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Paket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    /**
-     * Tampilkan halaman login admin
-     */
-    public function showAdminLogin()
-    {
-        return view('auth.admin_login');
-    }
 
-    /**
-     * Handle admin login request
-     */
-    public function adminLogin(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            
-            // Check if user is admin
-            if ($user->role !== 'admin') {
-                Auth::logout();
-                return back()->withErrors([
-                    'email' => 'Anda tidak memiliki akses admin.',
-                ])->onlyInput('email');
-            }
-            
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
-        }
-
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
-    }
 
     /**
      * Tampilkan halaman login
      */
     public function showLogin()
     {
-        return view('auth.login');
+        return view('auth.admin_login');
     }
 
     /**
@@ -65,14 +30,25 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors([
+                'email' => 'Email atau password salah.',
+            ])->onlyInput('email');
         }
 
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+        $request->session()->regenerate();
+        $user = Auth::user();
+
+        // Redirect berdasarkan role
+        switch ($user->role) {
+            case 'admin':
+                return redirect()->route('dashboard');
+
+            case 'user':
+            default:
+                $pakets = Paket::all(); 
+                return view('landing',compact('pakets'));
+        };
     }
 
     /**
@@ -80,30 +56,32 @@ class AuthController extends Controller
      */
     public function showRegister()
     {
-        return view('auth.register');
+        return view('layouts.register');
     }
 
     /**
      * Handle register request
      */
     public function register(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:6|confirmed',
+    ]);
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-        ]);
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => 'user', //default role as 'user'
+    ]);
 
-        Auth::login($user);
+    Auth::login($user);
 
-        return redirect('/dashboard');
-    }
+    return redirect()->route('login');
+}
+
 
     /**
      * Handle logout
@@ -118,4 +96,11 @@ class AuthController extends Controller
 
         return redirect('/');
     }
+
+    public function index()
+{
+    $orders = Order::with('user','items.paket')->latest()->get();
+    return view('admin.orders', compact('orders'));
+}
+
 }

@@ -17,13 +17,15 @@ class AdminMiddleware
     {
         // Check if user is authenticated
         if (!auth()->check()) {
-            return redirect('/admin/login')->with('error', 'Silakan login terlebih dahulu.');
+            return redirect('/login')->with('error', 'Silakan login terlebih dahulu.');
         }
 
         // Check if user is admin
         if (auth()->user()->role !== 'admin') {
             auth()->logout();
-            return redirect('/admin/login')->with('error', 'Anda tidak memiliki akses admin.');
+            return redirect('/login')->with('error', 'Anda tidak memiliki akses admin.');
+        } elseif (auth()->user()->role === 'user') {
+            return redirect('/landing');
         }
 
         return $next($request);

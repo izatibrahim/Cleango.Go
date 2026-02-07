@@ -1,927 +1,188 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Transaksi - CleanGo Laundry</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <style>
-        :root {
-            --primary: #8B5CF6;
-            --primary-dark: #7C3AED;
-            --secondary: #EC4899;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --info: #06B6D4;
-            --light: #F3E8FF;
-            --dark: #1F2937;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #faf8ff 0%, #f5f3ff 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
-            color: var(--dark);
-        }
-
-        /* Navbar */
-        .navbar-custom {
-            background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .navbar-brand {
-            font-weight: 600;
-            color: var(--dark) !important;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .navbar-brand:hover {
-            color: var(--primary) !important;
-        }
-
-        .navbar-title {
-            font-weight: 600;
-            color: var(--dark);
-            margin: 0;
-        }
-
-        /* Container */
-        .form-container {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(139, 92, 246, 0.1);
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-
-        /* Header Section */
-        .form-header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .form-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--warning) 0%, #FBBF24 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
-        }
-
-        .form-icon i {
-            font-size: 2.5rem;
-            color: white;
-        }
-
-        .form-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 10px;
-        }
-
-        .form-subtitle {
-            color: #6B7280;
-            font-size: 0.95rem;
-        }
-
-        /* Transaction Info Card */
-        .transaction-info-card {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(251, 191, 36, 0.05) 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 24px;
-            border: 2px solid rgba(245, 158, 11, 0.2);
-        }
-
-        .transaction-info-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--warning);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .transaction-info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .transaction-info-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .transaction-info-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: #6B7280;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
-        }
-
-        .transaction-info-value {
-            font-size: 0.9rem;
-            color: var(--dark);
-            font-weight: 500;
-        }
-
-        /* Form Elements */
-        .form-label {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        .form-label i {
-            color: var(--primary);
-            margin-right: 5px;
-        }
-
-        .required {
-            color: var(--secondary);
-        }
-
-        .form-control, .form-select {
-            border-radius: 12px;
-            border: 2px solid #E5E7EB;
-            padding: 12px 16px;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.15);
-            outline: none;
-        }
-
-        .form-control::placeholder {
-            color: #9CA3AF;
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .input-group-text {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
-            border: 2px solid #E5E7EB;
-            border-right: none;
-            border-radius: 12px 0 0 12px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .input-group .form-control {
-            border-left: none;
-            border-radius: 0 12px 12px 0;
-        }
-
-        .input-group .form-control:focus {
-            border-left: none;
-        }
-
-        .form-text {
-            color: #6B7280;
-            font-size: 0.8rem;
-            margin-top: 6px;
-            display: block;
-        }
-
-        .form-text i {
-            color: var(--info);
-        }
-
-        /* Alert */
-        .alert {
-            border-radius: 12px;
-            border: none;
-            padding: 16px 20px;
-        }
-
-        .alert-danger {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
-            color: #DC2626;
-            border-left: 4px solid #DC2626;
-        }
-
-        .alert-warning {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
-            color: #D97706;
-            border-left: 4px solid #F59E0B;
-        }
-
-        .alert-danger ul {
-            margin-bottom: 0;
-            padding-left: 20px;
-        }
-
-        /* Buttons */
-        .btn-submit {
-            background: linear-gradient(135deg, var(--warning) 0%, #FBBF24 100%);
-            border: none;
-            border-radius: 12px;
-            padding: 14px 32px;
-            color: white;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
-            color: white;
-        }
-
-        .btn-cancel {
-            background: white;
-            border: 2px solid #E5E7EB;
-            border-radius: 12px;
-            padding: 14px 32px;
-            color: var(--dark);
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-cancel:hover {
-            background: #F3F4F6;
-            border-color: #D1D5DB;
-            color: var(--dark);
-            transform: translateY(-2px);
-        }
-
-        /* Form Group */
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        /* Transaction Number Badge */
-        .trx-number-badge {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.1) 100%);
-            border: 2px solid rgba(245, 158, 11, 0.3);
-            border-radius: 12px;
-            padding: 12px;
-            font-family: 'Courier New', monospace;
-            font-weight: 600;
-            color: var(--warning);
-            font-size: 1.1rem;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        /* Price Calculator */
-        .price-calculator {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(6, 182, 212, 0.02) 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 15px;
-            border: 2px solid rgba(6, 182, 212, 0.2);
-        }
-
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-        }
-
-        .price-row:last-child {
-            margin-bottom: 0;
-            padding-top: 12px;
-            border-top: 2px solid rgba(6, 182, 212, 0.2);
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--primary);
-        }
-
-        .price-label {
-            color: #6B7280;
-        }
-
-        .price-value {
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        /* Status Badge */
-        .status-badge {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .status-pending {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
-            color: var(--warning);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
-        .status-selesai {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
-            color: var(--info);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-        }
-
-        .status-dibayar {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-        }
-
-        /* Badge */
-        .badge-edited {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.1) 100%);
-            color: var(--warning);
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
-        /* Form Row */
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        /* Character Counter */
-        .char-counter {
-            font-size: 0.8rem;
-            color: #6B7280;
-            text-align: right;
-            margin-top: 4px;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .form-container {
-                padding: 25px;
-                margin-top: 20px;
-            }
-
-            .form-title {
-                font-size: 1.5rem;
-            }
-
-            .form-icon {
-                width: 70px;
-                height: 70px;
-            }
-
-            .form-icon i {
-                font-size: 2rem;
-            }
-
-            .btn-submit, .btn-cancel {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .button-group {
-                flex-direction: column;
-            }
-
-            .transaction-info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .form-container {
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        /* Invalid Feedback */
-        .invalid-feedback {
-            color: #DC2626;
-            font-size: 0.85rem;
-            margin-top: 6px;
-        }
-
-        .is-invalid {
-            border-color: #DC2626 !important;
-        }
-
-        .is-invalid:focus {
-            box-shadow: 0 0 0 0.2rem rgba(220, 38, 38, 0.15) !important;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Transaksi - CleanGo Laundry</title>
+
+<style>
+:root{
+    --primary:#8B5CF6;
+    --secondary:#EC4899;
+    --success:#10B981;
+    --warning:#F59E0B;
+    --info:#06B6D4;
+    --dark:#1F2937;
+}
+body{
+    font-family:Poppins,system-ui;
+    background:linear-gradient(135deg,#faf8ff,#f5f3ff);
+    margin:0;
+}
+.container{max-width:900px;margin:auto;padding:30px}
+.card{
+    background:#fff;
+    border-radius:20px;
+    padding:35px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08)
+}
+h2{margin-bottom:25px;color:var(--primary)}
+label{font-weight:600;margin-bottom:6px;display:block}
+input,select,textarea{
+    width:100%;
+    padding:12px 14px;
+    border-radius:12px;
+    border:2px solid #E5E7EB;
+    margin-bottom:18px;
+}
+input:focus,select:focus,textarea:focus{
+    outline:none;
+    border-color:var(--primary);
+}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.badge{
+    padding:6px 14px;
+    border-radius:50px;
+    font-size:.85rem;
+    display:inline-block;
+}
+.pending{background:#FEF3C7;color:#92400E}
+.selesai{background:#E0F2FE;color:#0369A1}
+.dibayar{background:#ECFDF5;color:#065F46}
+.btn{
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    border:none;
+    color:#fff;
+    padding:14px 30px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+}
+.alert{
+    padding:16px 20px;
+    border-radius:14px;
+    margin-bottom:25px;
+    font-size:.95rem;
+    animation:fadeIn .4s ease;
+}
+.alert.success{
+    background:#ECFDF5;
+    color:#065F46;
+    border-left:5px solid var(--success);
+}
+.alert.error{
+    background:#FEF2F2;
+    color:#991B1B;
+    border-left:5px solid #DC2626;
+}
+.alert ul{
+    margin:8px 0 0 18px;
+    padding:0;
+}
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(-10px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+.btn:hover{opacity:.9}
+@media(max-width:768px){.row{grid-template-columns:1fr}}
+</style>
 </head>
+
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-light navbar-custom sticky-top">
-        <div class="container">
-            <a href="/transaksi" class="navbar-brand">
-                <i class="bi bi-arrow-left-circle me-2"></i> Kembali ke Daftar Transaksi
-            </a>
-            <h5 class="navbar-title d-none d-md-block">Edit Transaksi</h5>
-        </div>
-    </nav>
+<div class="container">
+<div class="card">
 
-    <!-- Main Container -->
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-xl-7">
-                <div class="form-container">
-                    <!-- Header -->
-                    <div class="form-header">
-                        <div class="form-icon">
-                            <i class="bi bi-pencil-square"></i>
-                        </div>
-                        <h2 class="form-title">Edit Transaksi</h2>
-                        <p class="form-subtitle">Perbarui detail transaksi laundry</p>
-                    </div>
+<h2>Edit Transaksi</h2>
+@if(session('success'))
+    <div class="alert success">
+        <strong>✅ Berhasil!</strong><br>
+        {{ session('success') }}
+    </div>
+@endif
 
-                    <!-- Transaction Info Card -->
-                    <div class="transaction-info-card">
-                        <div class="transaction-info-title">
-                            <i class="bi bi-info-circle-fill"></i>
-                            Informasi Transaksi
-                        </div>
-                        <div class="transaction-info-grid">
-                            <div class="transaction-info-item">
-                                <span class="transaction-info-label">ID Transaksi</span>
-                                <span class="transaction-info-value">#{{ str_pad($transaksi->id, 5, '0', STR_PAD_LEFT) }}</span>
-                            </div>
-                            <div class="transaction-info-item">
-                                <span class="transaction-info-label">Dibuat Pada</span>
-                                <span class="transaction-info-value">{{ $transaksi->created_at->format('d M Y H:i') }}</span>
-                            </div>
-                            <div class="transaction-info-item">
-                                <span class="transaction-info-label">Terakhir Diupdate</span>
-                                <span class="transaction-info-value">{{ $transaksi->updated_at->format('d M Y H:i') }}</span>
-                            </div>
-                            <div class="transaction-info-item">
-                                <span class="transaction-info-label">Status</span>
-                                <span class="transaction-info-value">
-                                    <span class="badge-edited">
-                                        <i class="bi bi-pencil-fill me-1"></i>Mode Edit
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+@if($errors->any())
+    <div class="alert error">
+        <strong>❌ Gagal!</strong>
+        <ul>
+            @foreach($errors->all() as $err)
+                <li>{{ $err }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
-                    <!-- Error Alert -->
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong><i class="bi bi-exclamation-circle-fill me-2"></i>Terdapat Kesalahan!</strong>
-                            <ul class="mt-2 mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
 
-                    <!-- Form -->
-                    <form action="/transaksi/{{ $transaksi->id }}" method="POST" id="transactionEditForm">
-                        @csrf
-                        @method('PATCH')
+<form action="{{ url('/transaksi/'.$transaksi->id) }}" method="POST">
+@csrf
+@method('PATCH')
 
-                        <!-- No Transaksi -->
-                        <div class="form-group">
-                            <label for="no_transaksi" class="form-label">
-                                <i class="bi bi-hash"></i> Nomor Transaksi <span class="required">*</span>
-                            </label>
-                            <div class="trx-number-badge">
-                                <i class="bi bi-receipt me-2"></i>
-                                {{ old('no_transaksi', $transaksi->no_transaksi) }}
-                            </div>
-                            <input 
-                                type="hidden" 
-                                class="form-control @error('no_transaksi') is-invalid @enderror" 
-                                id="no_transaksi" 
-                                name="no_transaksi" 
-                                value="{{ old('no_transaksi', $transaksi->no_transaksi) }}" 
-                                readonly
-                                required
-                            >
-                            <small class="form-text">
-                                <i class="bi bi-info-circle-fill"></i> Nomor transaksi tidak dapat diubah
-                            </small>
-                            @error('no_transaksi')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
+<!-- NO TRANSAKSI -->
+<input type="hidden" name="no_order" value="{{ $transaksi->no_order }}">
 
-                        <!-- Pelanggan & Tanggal Row -->
-                        <div class="form-row">
-                            <!-- Pelanggan -->
-                            <div class="form-group">
-                                <label for="user_id" class="form-label">
-                                    <i class="bi bi-person-fill"></i> Pelanggan
-                                </label>
-                                <select 
-                                    class="form-select @error('user_id') is-invalid @enderror" 
-                                    id="user_id" 
-                                    name="user_id"
-                                >
-                                    <option value="">-- Pilih Pelanggan --</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}" {{ old('user_id', $transaksi->user_id) == $user->id ? 'selected' : '' }}>
-                                            {{ $user->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <small class="form-text">
-                                    <i class="bi bi-info-circle-fill"></i> Opsional
-                                </small>
-                                @error('user_id')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
-                            </div>
+<!-- PELANGGAN -->
+<label>Pelanggan</label>
+<select name="user_id">
+    <option value="">— Umum —</option>
+    @foreach($users as $user)
+        <option value="{{ $user->id }}"
+            {{ $transaksi->user_id == $user->id ? 'selected' : '' }}>
+            {{ $user->name }}
+        </option>
+    @endforeach
+</select>
 
-                            <!-- Tanggal -->
-                            <div class="form-group">
-                                <label for="tanggal" class="form-label">
-                                    <i class="bi bi-calendar-event-fill"></i> Tanggal
-                                </label>
-                                <input 
-                                    type="date" 
-                                    class="form-control" 
-                                    id="tanggal" 
-                                    name="tanggal" 
-                                    value="{{ old('tanggal', $transaksi->tanggal ?? date('Y-m-d')) }}"
-                                >
-                                <small class="form-text">
-                                    <i class="bi bi-info-circle-fill"></i> Tanggal transaksi
-                                </small>
-                            </div>
-                        </div>
+<!-- PAKET -->
+<label>Paket Laundry</label>
+<select name="paket_id" required>
+@foreach($pakets as $paket)
+    <option value="{{ $paket->id }}"
+        {{ $transaksi->paket_id == $paket->id ? 'selected' : '' }}>
+        {{ $paket->nama_paket }} - Rp {{ number_format($paket->harga) }}/kg
+    </option>
+@endforeach
+</select>
 
-                        <!-- Paket -->
-                        <div class="form-group">
-                            <label for="paket_id" class="form-label">
-                                <i class="bi bi-box-seam-fill"></i> Paket Laundry <span class="required">*</span>
-                            </label>
-                            <select 
-                                class="form-select @error('paket_id') is-invalid @enderror" 
-                                id="paket_id" 
-                                name="paket_id" 
-                                required 
-                                onchange="updateCalculator()"
-                            >
-                                <option value="">-- Pilih Paket Laundry --</option>
-                                @foreach ($pakets as $paket)
-                                    <option 
-                                        value="{{ $paket->id }}" 
-                                        data-harga="{{ $paket->harga }}"
-                                        data-nama="{{ $paket->nama_paket }}"
-                                        {{ old('paket_id', $transaksi->paket_id) == $paket->id ? 'selected' : '' }}
-                                    >
-                                        {{ $paket->nama_paket }} - Rp {{ number_format($paket->harga, 0, ',', '.') }}/kg
-                                    </option>
-                                @endforeach
-                            </select>
-                            <small class="form-text">
-                                <i class="bi bi-info-circle-fill"></i> Pilih paket layanan
-                            </small>
-                            @error('paket_id')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Berat & Harga per KG -->
-                        <div class="form-row">
-                            <!-- Berat -->
-                            <div class="form-group">
-                                <label for="berat" class="form-label">
-                                    <i class="bi bi-speedometer2"></i> Berat (kg)
-                                </label>
-                                <div class="input-group">
-                                    <input 
-                                        type="number" 
-                                        class="form-control" 
-                                        id="berat" 
-                                        name="berat" 
-                                        value="{{ old('berat', $transaksi->berat ?? 1) }}" 
-                                        step="0.5" 
-                                        min="0.5"
-                                        onchange="updateCalculator()"
-                                    >
-                                    <span class="input-group-text">kg</span>
-                                </div>
-                                <small class="form-text">
-                                    <i class="bi bi-info-circle-fill"></i> Minimal 0.5 kg
-                                </small>
-                            </div>
-
-                            <!-- Harga per KG (Display) -->
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="bi bi-tag-fill"></i> Harga per KG
-                                </label>
-                                <div class="input-group">
-                                    <span class="input-group-text">Rp</span>
-                                    <input 
-                                        type="text" 
-                                        class="form-control" 
-                                        id="harga_display" 
-                                        value="0" 
-                                        readonly
-                                        style="background-color: #F9FAFB;"
-                                    >
-                                </div>
-                                <small class="form-text">
-                                    <i class="bi bi-info-circle-fill"></i> Dari paket yang dipilih
-                                </small>
-                            </div>
-                        </div>
-
-                        <!-- Price Calculator -->
-                        <div class="price-calculator" id="priceCalculator">
-                            <div class="price-row">
-                                <span class="price-label">Paket:</span>
-                                <span class="price-value" id="calc_paket">-</span>
-                            </div>
-                            <div class="price-row">
-                                <span class="price-label">Harga per kg:</span>
-                                <span class="price-value" id="calc_harga_kg">Rp 0</span>
-                            </div>
-                            <div class="price-row">
-                                <span class="price-label">Berat:</span>
-                                <span class="price-value" id="calc_berat">0 kg</span>
-                            </div>
-                            <div class="price-row">
-                                <span class="price-label">TOTAL HARGA:</span>
-                                <span class="price-value" id="calc_total">Rp 0</span>
-                            </div>
-                        </div>
-
-                        <!-- Total Harga -->
-                        <div class="form-group">
-                            <label for="total_harga" class="form-label">
-                                <i class="bi bi-wallet2"></i> Total Harga <span class="required">*</span>
-                            </label>
-                            <div class="input-group">
-                                <span class="input-group-text">Rp</span>
-                                <input 
-                                    type="number" 
-                                    class="form-control @error('total_harga') is-invalid @enderror" 
-                                    id="total_harga" 
-                                    name="total_harga" 
-                                    value="{{ old('total_harga', $transaksi->total_harga) }}" 
-                                    step="1000" 
-                                    min="0" 
-                                    required
-                                    style="font-weight: 700; font-size: 1.1rem; color: var(--primary);"
-                                >
-                            </div>
-                            <small class="form-text">
-                                <i class="bi bi-info-circle-fill"></i> Harga otomatis dihitung, dapat diubah manual
-                            </small>
-                            @error('total_harga')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Status -->
-                        <div class="form-group">
-                            <label for="status" class="form-label">
-                                <i class="bi bi-flag-fill"></i> Status Transaksi <span class="required">*</span>
-                            </label>
-                            <select 
-                                class="form-select @error('status') is-invalid @enderror" 
-                                id="status" 
-                                name="status" 
-                                required
-                                onchange="updateStatusPreview()"
-                            >
-                                <option value="pending" {{ old('status', $transaksi->status) == 'pending' ? 'selected' : '' }}>
-                                    ⏳ Pending - Menunggu Proses
-                                </option>
-                                <option value="selesai" {{ old('status', $transaksi->status) == 'selesai' ? 'selected' : '' }}>
-                                    ✅ Selesai - Sudah Dicuci
-                                </option>
-                                <option value="dibayar" {{ old('status', $transaksi->status) == 'dibayar' ? 'selected' : '' }}>
-                                    💰 Dibayar - Lunas
-                                </option>
-                            </select>
-                            <div class="mt-2">
-                                <span class="status-badge status-pending" id="statusPreview">
-                                    <i class="bi bi-clock-fill me-1"></i> Pending
-                                </span>
-                            </div>
-                            @error('status')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Catatan -->
-                        <div class="form-group">
-                            <label for="catatan" class="form-label">
-                                <i class="bi bi-chat-left-text-fill"></i> Catatan Tambahan
-                            </label>
-                            <textarea 
-                                class="form-control @error('catatan') is-invalid @enderror" 
-                                id="catatan" 
-                                name="catatan" 
-                                rows="3" 
-                                placeholder="Instruksi khusus untuk laundry"
-                                maxlength="500"
-                            >{{ old('catatan', $transaksi->catatan) }}</textarea>
-                            <div class="d-flex justify-content-between">
-                                <small class="form-text">
-                                    <i class="bi bi-info-circle-fill"></i> Catatan opsional (max 500 karakter)
-                                </small>
-                                <small class="char-counter">
-                                    <span id="charCount">0</span>/500
-                                </small>
-                            </div>
-                            @error('catatan')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Warning Alert -->
-                        <div class="alert alert-warning" role="alert">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                            <strong>Perhatian!</strong> Pastikan perubahan data sudah benar. Update status ke "Dibayar" jika transaksi sudah lunas.
-                        </div>
-
-                        <!-- Buttons -->
-                        <div class="d-flex gap-3 button-group">
-                            <button type="submit" class="btn btn-submit">
-                                <i class="bi bi-check-circle-fill me-2"></i> Simpan Perubahan
-                            </button>
-                            <a href="/transaksi" class="btn btn-cancel">
-                                <i class="bi bi-x-circle me-2"></i> Batal
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<div class="row">
+    <!-- BERAT -->
+    <div>
+        <label>Berat (kg)</label>
+        <input type="number" name="berat"
+               value="{{ $transaksi->berat }}"
+               step="0.5" min="0.5">
     </div>
 
-    <!-- Footer Spacing -->
-    <div style="height: 50px;"></div>
+    <!-- TOTAL (FIX: SESUAI DB & CONTROLLER) -->
+    <div>
+        <label>Total Harga</label>
+        <input type="number" name="total"
+               value="{{ $transaksi->total }}"
+               min="0" step="1000" required>
+    </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Update calculator
-        function updateCalculator() {
-            const paketSelect = document.getElementById('paket_id');
-            const beratInput = document.getElementById('berat');
-            const totalHargaInput = document.getElementById('total_harga');
-            const hargaDisplay = document.getElementById('harga_display');
-            const priceCalculator = document.getElementById('priceCalculator');
-            
-            const selectedOption = paketSelect.options[paketSelect.selectedIndex];
-            const hargaPerKg = parseInt(selectedOption.dataset.harga) || 0;
-            const namaPaket = selectedOption.dataset.nama || '-';
-            const berat = parseFloat(beratInput.value) || 0;
-            
-            if (hargaPerKg > 0 && berat > 0) {
-                const total = hargaPerKg * berat;
-                
-                hargaDisplay.value = formatRupiah(hargaPerKg);
-                totalHargaInput.value = total;
-                
-                document.getElementById('calc_paket').textContent = namaPaket;
-                document.getElementById('calc_harga_kg').textContent = 'Rp ' + formatRupiah(hargaPerKg);
-                document.getElementById('calc_berat').textContent = berat + ' kg';
-                document.getElementById('calc_total').textContent = 'Rp ' + formatRupiah(total);
-                
-                priceCalculator.style.display = 'block';
-            }
-        }
+<!-- STATUS -->
+<label>Status</label>
+<select name="status" required>
+    <option value="pending"  {{ $transaksi->status=='pending'?'selected':'' }}>Pending</option>
+    <option value="selesai"  {{ $transaksi->status=='selesai'?'selected':'' }}>Selesai</option>
+    <option value="dibayar"  {{ $transaksi->status=='dibayar'?'selected':'' }}>Dibayar</option>
+</select>
 
-        function formatRupiah(angka) {
-            return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
+<span class="badge {{ $transaksi->status }}">
+    {{ ucfirst($transaksi->status) }}
+</span>
 
-        function updateStatusPreview() {
-            const statusSelect = document.getElementById('status');
-            const statusPreview = document.getElementById('statusPreview');
-            const status = statusSelect.value;
-            
-            statusPreview.className = 'status-badge';
-            
-            if (status === 'pending') {
-                statusPreview.classList.add('status-pending');
-                statusPreview.innerHTML = '<i class="bi bi-clock-fill me-1"></i> Pending';
-            } else if (status === 'selesai') {
-                statusPreview.classList.add('status-selesai');
-                statusPreview.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Selesai';
-            } else if (status === 'dibayar') {
-                statusPreview.classList.add('status-dibayar');
-                statusPreview.innerHTML = '<i class="bi bi-cash-coin me-1"></i> Dibayar';
-            }
-        }
+<!-- CATATAN -->
+<label>Catatan</label>
+<textarea name="catatan">{{ $transaksi->catatan }}</textarea>
 
-        // Character counter
-        const catatanField = document.getElementById('catatan');
-        const charCount = document.getElementById('charCount');
-        
-        if (catatanField && charCount) {
-            catatanField.addEventListener('input', function() {
-                charCount.textContent = this.value.length;
-                if (this.value.length >= 450) charCount.style.color = '#F59E0B';
-                if (this.value.length >= 500) charCount.style.color = '#DC2626';
-                if (this.value.length < 450) charCount.style.color = '#6B7280';
-            });
-            charCount.textContent = catatanField.value.length;
-        }
+<button class="btn" type="submit">
+    Simpan Perubahan
+</button>
 
-        // Form submission
-        const form = document.getElementById('transactionEditForm');
-        
-        form.addEventListener('submit', function(e) {
-            if (!confirm('Apakah Anda yakin ingin menyimpan perubahan transaksi ini?')) {
-                e.preventDefault();
-                return false;
-            }
-
-            const submitBtn = form.querySelector('.btn-submit');
-            submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i> Menyimpan...';
-            submitBtn.disabled = true;
-        });
-
-        // Auto-dismiss alerts
-        setTimeout(function() {
-            const alerts = document.querySelectorAll('.alert:not(.alert-warning)');
-            alerts.forEach(alert => {
-                const bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
-            });
-        }, 5000);
-
-        // Track changes
-        let formChanged = false;
-        const formInputs = form.querySelectorAll('input, textarea, select');
-        
-        formInputs.forEach(input => {
-            input.addEventListener('change', function() {
-                formChanged = true;
-            });
-        });
-
-        window.addEventListener('beforeunload', function(e) {
-            if (formChanged) {
-                e.preventDefault();
-                e.returnValue = '';
-            }
-        });
-
-        form.addEventListener('submit', function() {
-            formChanged = false;
-        });
-
-        // Initialize
-        window.addEventListener('DOMContentLoaded', function() {
-            updateCalculator();
-            updateStatusPreview();
-        });
-    </script>
+</form>
+</div>
+</div>
 </body>
 </html>
