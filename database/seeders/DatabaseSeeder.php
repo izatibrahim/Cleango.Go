@@ -17,6 +17,19 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
+        // Create admin user
+        User::factory()->create([
+            'name' => 'Admin Laundry',
+            'email' => 'admin@cleango.com',
+            'role' => 'admin',
+            'password' => bcrypt('admin123'),
+        ]);
+
         $this->call(AdminUserSeeder::class);
     }
 }
